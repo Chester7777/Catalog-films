@@ -1,0 +1,22 @@
+.pageNumber {
+    padding: 2px;
+    border: 1px solid gray;
+}
+
+/*.selectedPage {*/
+/*    font-weight: bold;*/
+/*    border: 3px solid blue;*/
+/*    background-color: aqua;*/
+/*}*/
+
+.paginator :hover {
+    font-weight: bold;
+    border: 3px solid blue;
+    background-color: aqua;
+}
+
+
+.paginator {
+    margin: 10px;
+}
+
