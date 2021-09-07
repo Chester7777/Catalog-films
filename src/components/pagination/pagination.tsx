@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import s from "./Paginator.module.css"
+import s from "./paginator.module.css"
 import cn from "classnames";
 
 type PaginatorType = {
@@ -11,7 +11,7 @@ type PaginatorType = {
 export const Paginator = ({currentPage, totalResults = 446}: PaginatorType) => {
     const [portionSize, setPortionSize] = useState<number>(10)
     // const [totalResults, setTotalResults] = useState<number>(446)
-    // const [currentPage, setCurrentPage] = useState<number>(1)
+    const [currentPage1, setCurrentPage1] = useState<number>(1)
     let [portionNumber, setPortionNumber] = useState<number>(1);
     const [imdbID, setImdbID] = useState<string>("")
 
@@ -20,9 +20,10 @@ export const Paginator = ({currentPage, totalResults = 446}: PaginatorType) => {
     let pages = [];
     // let [pages, setPages] = useState<Array<any>>([]);
 
-    const onPageChanged = (currentPage: number) => {
+    const onPageChanged = () => {
         // dispatch(getTC(currentPage, imdbID))
         // setPages([currentPage])
+        setCurrentPage1(currentPage)
     }
 
 
@@ -46,10 +47,11 @@ export const Paginator = ({currentPage, totalResults = 446}: PaginatorType) => {
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map((p) => {
                         return <span
-                            className={cn({[s.selectedPage]: currentPage === p}, s.pageNumber)}
+                            // className={cn({[s.selectedPage]: currentPage1 === p}, s.pageNumber)}
+                            className={ currentPage1 === p ? s.selectedPage : s.pageNumber}
                             key={p}
                             onClick={(e) => {
-                                onPageChanged(p)
+                                onPageChanged()
                             }}>{p}</span>
                     })
             }
