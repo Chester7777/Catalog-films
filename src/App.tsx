@@ -15,12 +15,18 @@ export type FilmsType = {
     imdbID: string
 }
 
+export type GetDataType = {
+    Response: string
+    Search: Array<FilmsType>
+    totalResults: string
+}
+
 function App(this: any) {
     const [totalResults, setTotalResults] = useState<number>(446)
     const [currentPage, setCurrentPage] = useState<number>(1)
     let [search, setSearch] = useState<string>("")
     let [films, setFilms] = useState<Array<FilmsType>>([])
-    let [imdbID, setImdbID] = useState<string>("")
+    // let [imdbID, setImdbID] = useState<string>("")
     let [response, setResponse] = useState<boolean>(false)
     let [error, setError] = useState<string>("")
 
@@ -36,18 +42,35 @@ function App(this: any) {
         fetchMovies(searchText, currentPage);
     }
 
-    const fetchMovies = (searchText: string, page: number) => {
-        axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${page}`).then(data => {
-            // debugger
+    const fetchMovies = async (searchText: string, page: number) => {
+        // axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${page}`).then(data => {
+        //     // debugger
+        //     console.log(data.data)
+        //     setFilms(data.data.Search)
+        //     // debugger
+        //     setTotalResults(data.data.totalResults)
+        //     // setImdbID(data.data.imdbID)
+        //     setResponse(data.data.Response)
+        //     setError(data.data.error)
+        //     setCurrentPage(currentPage)
+        // })
+        try {
+            let data: any = await   axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${page}`)
             console.log(data.data)
-            setFilms(data.data.Search)
             // debugger
+            setFilms(data.data.Search)
             setTotalResults(data.data.totalResults)
-            setImdbID(data.data.imdbID)
+            // setImdbID(data.data.imdbID)
             setResponse(data.data.Response)
             setError(data.data.error)
             setCurrentPage(currentPage)
-        })
+        } catch (error) {
+            console.log(`SEE YOE: ${error}`)
+            // debugger
+
+            setError("FILM NOT FOUND!!! TRY AGAIN:)")
+        }
+
     }
 
     return (
@@ -80,10 +103,14 @@ function App(this: any) {
             <div className="container">
                 {
                     films.length > 0 ?
-                    films.map(film => <div key={film.imdbID}>{film.imdbID}</div>)
+                    films.map(film => <div key={film.imdbID}>{film.imdbID} {film.Title}</div>)
                         : error
                 }
-                <Paginator currentPage={currentPage} totalResults={totalResults} changePage={changePage}/>
+                <Paginator
+                    // currentPage={currentPage}
+                    totalResults={totalResults}
+                    changePage={changePage}
+                />
             </div>
         </div>
     );

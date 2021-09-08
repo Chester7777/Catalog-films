@@ -3,18 +3,18 @@ import s from "./paginator.module.css"
 import cn from "classnames";
 
 type PaginatorType = {
-    currentPage: number
+    // currentPage: number
     totalResults: number
     changePage: (page: number) => void
 }
 
 
-export const Paginator = ({currentPage, totalResults = 446, changePage}: PaginatorType) => {
+export const Paginator = ({ totalResults = 446, changePage}: PaginatorType) => {
     const [portionSize, setPortionSize] = useState<number>(10)
-    // const [totalResults, setTotalResults] = useState<number>(446)
-    const [currentPage1, setCurrentPage1] = useState<number>(1)
+    const [currentPage, setCurrentPage] = useState<number>(1)
     let [portionNumber, setPortionNumber] = useState<number>(1);
-    const [imdbID, setImdbID] = useState<string>("")
+    // const [totalResults, setTotalResults] = useState<number>(446)
+    // const [imdbID, setImdbID] = useState<string>("")
 
 
     let pagesCount = Math.ceil(totalResults / 10);
@@ -24,7 +24,7 @@ export const Paginator = ({currentPage, totalResults = 446, changePage}: Paginat
     const onPageChanged = (p: number) => {
         // dispatch(getTC(currentPage, imdbID))
         // setPages([currentPage])
-        setCurrentPage1(p);
+        setCurrentPage(p);
         changePage(p)
     }
 
@@ -50,7 +50,7 @@ export const Paginator = ({currentPage, totalResults = 446, changePage}: Paginat
                     .map((p) => {
                         return <span
                             // className={cn({[s.selectedPage]: currentPage1 === p}, s.pageNumber)}
-                            className={currentPage1 === p ? s.selectedPage : s.pageNumber}
+                            className={currentPage === p ? s.selectedPage : s.pageNumber}
                             key={p}
                             onClick={(e) => {
                                 onPageChanged(p)
