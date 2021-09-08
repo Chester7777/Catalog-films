@@ -5,10 +5,11 @@ import cn from "classnames";
 type PaginatorType = {
     currentPage: number
     totalResults: number
+    changePage: (page: number) => void
 }
 
 
-export const Paginator = ({currentPage, totalResults = 446}: PaginatorType) => {
+export const Paginator = ({currentPage, totalResults = 446, changePage}: PaginatorType) => {
     const [portionSize, setPortionSize] = useState<number>(10)
     // const [totalResults, setTotalResults] = useState<number>(446)
     const [currentPage1, setCurrentPage1] = useState<number>(1)
@@ -20,10 +21,11 @@ export const Paginator = ({currentPage, totalResults = 446}: PaginatorType) => {
     let pages = [];
     // let [pages, setPages] = useState<Array<any>>([]);
 
-    const onPageChanged = () => {
+    const onPageChanged = (p: number) => {
         // dispatch(getTC(currentPage, imdbID))
         // setPages([currentPage])
-        setCurrentPage1(currentPage)
+        setCurrentPage1(p);
+        changePage(p)
     }
 
 
@@ -48,10 +50,10 @@ export const Paginator = ({currentPage, totalResults = 446}: PaginatorType) => {
                     .map((p) => {
                         return <span
                             // className={cn({[s.selectedPage]: currentPage1 === p}, s.pageNumber)}
-                            className={ currentPage1 === p ? s.selectedPage : s.pageNumber}
+                            className={currentPage1 === p ? s.selectedPage : s.pageNumber}
                             key={p}
                             onClick={(e) => {
-                                onPageChanged()
+                                onPageChanged(p)
                             }}>{p}</span>
                     })
             }

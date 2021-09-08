@@ -6,33 +6,49 @@ import {Paginator} from "./components/pagination/pagination";
 import {CounterResults} from "./components/counterResults/counterResults";
 import {useParams} from "react-router-dom";
 
+
+export type FilmsType = {
+    Poster: string
+    Title: string
+    Type: string
+    Year: string
+    imdbID: string
+}
+
 function App(this: any) {
     const [totalResults, setTotalResults] = useState<number>(446)
     const [currentPage, setCurrentPage] = useState<number>(1)
     let [search, setSearch] = useState<string>("")
-    let [films, setFilms] = useState<Array<any>>([])
+    let [films, setFilms] = useState<Array<FilmsType>>([])
     let [imdbID, setImdbID] = useState<string>("")
     let [response, setResponse] = useState<boolean>(false)
     let [error, setError] = useState<string>("")
 
 
+    const changePage = (page: number) => {
+        fetchMovies(search, page)
+    }
+
     const getMove = (searchText: string) => {
         console.log(searchText)
         // searchText = evt.currentTarget
         setSearch(searchText)
-        axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=1`).then(data => {
-            // axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${currentPage}`).then(data => {
-            debugger
-            console.log(data.data)
-            setFilms(data.data.search)
-            setTotalResults(data.data.totalResults)
-            setImdbID(data.data.imdbID)
-            setResponse(data.data.response)
-            setError(data.data.error)
-            // setCurrentPage(currentPage)
-        })
+        fetchMovies(searchText, currentPage);
     }
 
+    const fetchMovies = (searchText: string, page: number) => {
+        axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${page}`).then(data => {
+            // debugger
+            console.log(data.data)
+            setFilms(data.data.Search)
+            // debugger
+            setTotalResults(data.data.totalResults)
+            setImdbID(data.data.imdbID)
+            setResponse(data.data.Response)
+            setError(data.data.error)
+            setCurrentPage(currentPage)
+        })
+    }
 
     return (
         <div className="App">
@@ -63,9 +79,11 @@ function App(this: any) {
             </div>
             <div className="container">
                 {
-                    films.map(film => !!film ? <div key={imdbID}>{film}</div> : error
-                    )}
-                <Paginator currentPage={currentPage} totalResults={totalResults}/>
+                    films.length > 0 ?
+                    films.map(film => <div key={film.imdbID}>{film.imdbID}</div>)
+                        : error
+                }
+                <Paginator currentPage={currentPage} totalResults={totalResults} changePage={changePage}/>
             </div>
         </div>
     );
