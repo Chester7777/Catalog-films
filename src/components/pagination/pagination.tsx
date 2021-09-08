@@ -3,7 +3,6 @@ import s from "./paginator.module.css"
 import cn from "classnames";
 
 type PaginatorType = {
-    // currentPage: number
     totalResults: number
     changePage: (page: number) => void
 }
@@ -13,17 +12,12 @@ export const Paginator = ({ totalResults = 446, changePage}: PaginatorType) => {
     const [portionSize, setPortionSize] = useState<number>(10)
     const [currentPage, setCurrentPage] = useState<number>(1)
     let [portionNumber, setPortionNumber] = useState<number>(1);
-    // const [totalResults, setTotalResults] = useState<number>(446)
-    // const [imdbID, setImdbID] = useState<string>("")
 
 
     let pagesCount = Math.ceil(totalResults / 10);
     let pages = [];
-    // let [pages, setPages] = useState<Array<any>>([]);
 
     const onPageChanged = (p: number) => {
-        // dispatch(getTC(currentPage, imdbID))
-        // setPages([currentPage])
         setCurrentPage(p);
         changePage(p)
     }
@@ -49,8 +43,7 @@ export const Paginator = ({ totalResults = 446, changePage}: PaginatorType) => {
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map((p) => {
                         return <span
-                            // className={cn({[s.selectedPage]: currentPage1 === p}, s.pageNumber)}
-                            className={currentPage === p ? s.selectedPage : s.pageNumber}
+                            className={cn({[s.selectedPage]: currentPage === p}, s.pageNumber)}
                             key={p}
                             onClick={(e) => {
                                 onPageChanged(p)

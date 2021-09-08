@@ -32,7 +32,7 @@ class Search extends React.Component<IsearchProps, IsearchState> {
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             this.sendToParent(this.state.searchText);
-        }, 600);
+        }, 1600);
     }
 
     clearSearchField(): void {
