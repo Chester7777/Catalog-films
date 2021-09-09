@@ -4,8 +4,8 @@ import Search from './components/search/search'
 import axios from 'axios';
 import {Paginator} from "./components/pagination/pagination";
 import {CounterResults} from "./components/counterResults/counterResults";
-import placeholder from "./asseds/images/placeholder.png";
 import {Loading} from "./components/loader/loading";
+import {Films} from "./components/films/films";
 
 
 export type FilmType = {
@@ -27,7 +27,7 @@ function App(this: any) {
     const [currentPage, setCurrentPage] = useState<number>(1)
     let [search, setSearch] = useState<string>("")
     let [films, setFilms] = useState<Array<FilmType>>([])
-    let [response, setResponse] = useState<boolean>(false)
+    let [response, setResponse] = useState<string>("False")
     let [error, setError] = useState<string>("")
     const [spinner, setSpinner] = useState<boolean>(false)
 
@@ -47,22 +47,18 @@ function App(this: any) {
         setSpinner(true)
         try {
             let response: any = await axios.get<GetDataType>(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${page}`)
-            if (response.data.Response) {
-                // console.log(response.data)
+            if (response.data.Response && response.data.Response === "True") {
                 setFilms(response.data.Search)
                 setTotalResults(response.data.totalResults)
                 setResponse(response.data.Response)
                 setError(response.data.error)
                 setCurrentPage(currentPage)
             } else {
-                setError(`SEE YOE: ${response.Error}`)
+                setError(`Error in request : ${response.data.Error}`)
             }
 
         } catch (error) {
-            console.log(`SEE YOE: ${error}`)
-            // debugger
-
-            setError(`ERROR: ${error}`)
+            console.log(`Error: ${error}`)
         } finally {
             setSpinner(false)
         }
@@ -85,31 +81,22 @@ function App(this: any) {
                     </div>
                 </div>
             </div>
-            <div className="container">
-                <CounterResults
-                    searchText={search}
-                    // films={films}
-                    totalResults={totalResults}
-                    response={response}
-                    // error={error}
-                />
-            </div>
-            {spinner ? <Loading/> : ""}
-            <div className="container">
-                {
-                    films && films.length > 0 ?
-                        films.map((film) => <div key={film.imdbID}>
-                                <img src={film.Poster ? film.Poster : placeholder} alt=""/>
-                                {`${film.imdbID} ${film.Title} ${film.Poster} ${film.Type} ${film.Year}`}
-                            </div>
-                        )
-                        : error
-                }
-                <Paginator
-                    totalResults={totalResults}
-                    changePage={changePage}
-                />
-            </div>
+            {
+                error ? error :
+                    <div className="container">
+                        {spinner ? <Loading/> : ""}
+                        <CounterResults
+                            searchText={search}
+                            totalResults={totalResults}
+                            response={response}
+                        />
+                        <Films films={films}/>
+                        <Paginator
+                            totalResults={totalResults}
+                            changePage={changePage}
+                        />
+                    </div>
+            }
         </div>
     );
 }

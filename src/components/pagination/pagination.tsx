@@ -8,7 +8,7 @@ type PaginatorType = {
 }
 
 
-export const Paginator = ({ totalResults = 446, changePage}: PaginatorType) => {
+export const Paginator = ({ totalResults, changePage}: PaginatorType) => {
     const [portionSize, setPortionSize] = useState<number>(10)
     const [currentPage, setCurrentPage] = useState<number>(1)
     let [portionNumber, setPortionNumber] = useState<number>(1);
