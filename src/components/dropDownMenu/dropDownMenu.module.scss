@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .select {
+    height: 85%;
+    width: 35%;
+    padding: 5px;
+    background-color: #badaed;
+    border: none;
+    font-weight: bold;
+  }
+
+  img {
+    width: 10%;
+    height: 30px;
+  }
+}

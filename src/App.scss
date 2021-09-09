@@ -11,6 +11,13 @@
     font-size: calc(10px + 2vmin);
     color: white;
   }
+
+  .App-error {
+    padding: 50px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 3px 4px 3px #37b1f3;
+  }
 }
 
 .App-logo {

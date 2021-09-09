@@ -1,0 +1,31 @@
+.paginator {
+  margin: 10px;
+
+  .pageNumber, button {
+    padding: 8px 12px;
+    margin: 3px;
+    border: 1px solid gray;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  button {
+    padding: 5px 10px !important;
+    color: #37b1f3;
+  }
+
+  .selectedPage {
+    font-weight: bold;
+    border: 1px solid blue;
+    background-color: #badaed;
+    color: blue;
+  }
+}
+
+.paginator :hover {
+  font-weight: bold;
+  border: 2px solid blue;
+  transform: scale(1.2);
+}
+
+
+

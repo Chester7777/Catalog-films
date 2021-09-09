@@ -1,7 +1,7 @@
 import placeholder from "../../asseds/images/placeholder.png";
 import React from "react";
 import {FilmType} from "../../App";
-import s from "./films.module.scss"
+import s from "./films.module.scss";
 
 
 type FilmsType = {
@@ -27,8 +27,7 @@ export const Films = ({films}: FilmsType) => {
                             {/*{`Name: ${film.Title} Year: ${film.Year} ${film.imdbID}  ${film.Poster} ${film.Type} `}*/}
                         </div>
                     </div>
-                )
-                : ""
+                ) : ""
         }
     </div>
 }

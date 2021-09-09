@@ -6,6 +6,7 @@ import {Paginator} from "./components/pagination/pagination";
 import {CounterResults} from "./components/counterResults/counterResults";
 import {Loading} from "./components/loader/loading";
 import {Films} from "./components/films/films";
+import {DropDownMenu} from "./components/dropDownMenu/dropDownMenu";
 
 
 export type FilmType = {
@@ -22,8 +23,8 @@ export type GetDataType = {
     totalResults: string
 }
 
-function App(this: any) {
-    const [totalResults, setTotalResults] = useState<number>(446)
+function App() {
+    const [totalResults, setTotalResults] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(1)
     let [search, setSearch] = useState<string>("")
     let [films, setFilms] = useState<Array<FilmType>>([])
@@ -75,20 +76,19 @@ function App(this: any) {
                                 <Search handleKeyUp={(evt: string) => getMove(evt)}/>
                             </div>
                             <div className="col">
-                                12
+                                <DropDownMenu/>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             {
-                error ? error :
+                error ? <div className="App-error">{error}</div> :
                     <div className="container">
                         {spinner ? <Loading/> : ""}
                         <CounterResults
                             searchText={search}
                             totalResults={totalResults}
-                            response={response}
                         />
                         <Films films={films}/>
                         <Paginator

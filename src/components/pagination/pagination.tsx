@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import s from "./paginator.module.css"
+import s from "./paginator.module.scss"
 import cn from "classnames";
 
 type PaginatorType = {

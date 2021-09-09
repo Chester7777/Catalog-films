@@ -9,6 +9,7 @@
   margin: 0;
   box-sizing: border-box;
 
+
   .container_film {
     display: flex;
     justify-content: start;
@@ -18,6 +19,7 @@
 
     img {
       width: 50%;
+      cursor: pointer;
       transition: 1s all;
     }
 
@@ -29,7 +31,8 @@
     .container_text {
       width: 50%;
       //height: 250px;
-      background: #7cd4ae;
+      background: #badaed;
+      //background: rgba(187, 186, 186, 0.84);
       padding: 10px;
       display: flex;
       flex-direction: column;
@@ -45,5 +48,12 @@
       }
     }
   }
+  //@media all and (min-width: 420px) {
+  //  .container_films {
+  //    display: flex;
+  //    flex-direction: column;
+  //    background-color: brown;
+  //  }
+  //}
 }
 
