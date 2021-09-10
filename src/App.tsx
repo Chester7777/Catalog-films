@@ -48,7 +48,7 @@ function App() {
         setSpinner(true)
         try {
             let response: any = await axios.get<GetDataType>(`https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8&s=${searchText}&page=${page}`)
-            if (response.data.Response && response.data.Response === "True") {
+            if (response.data.Response === "True") {
                 setFilms(response.data.Search)
                 setTotalResults(response.data.totalResults)
                 setResponse(response.data.Response)
